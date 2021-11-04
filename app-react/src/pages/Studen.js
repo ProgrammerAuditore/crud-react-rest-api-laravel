@@ -4,14 +4,51 @@ import { Link } from 'react-router-dom';
 
 class Student extends Component {
 
+    state = {
+        students: [],
+        loading: true,
+    }
+
     async componentDidMount() {
         const resp = await axios.get('http://127.0.0.1:8000/api/students');
+        
         if( resp.data.status === 200 ){
             console.log(resp.data.students);
+            this.setState({
+                students: resp.data.students,
+                loading : false,
+            });
         }
+
     }
 
     render() {
+
+        var student_HTMLTABLE="";
+        if(this.state.loading){
+            student_HTMLTABLE = <tr>
+                <td colSpan="7">Loading</td>
+            </tr>;
+        }else{
+            student_HTMLTABLE = this.state.students.map( (item) => { 
+                return (
+                    <tr key={item.id}>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                        <td>{item.lastname}</td>
+                        <td>{item.email}</td>
+                        <td>{item.age}</td>
+                        <td>
+                            <Link to={`edit-student/${item.id}`} className="btn btn-warning btn-sm">Edit</Link>
+                        </td>
+                        <td>
+                            <button type="button" className="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                );
+            });
+        }
+
         return(
             <div className="container">
                 <div className="row">
@@ -30,23 +67,12 @@ class Student extends Component {
                                             <th>Last Name</th>
                                             <th>Email</th>
                                             <th>Age</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>#</td>
-                                            <td>Luis</td>
-                                            <td>Martinez</td>
-                                            <td>luis@example.com</td>
-                                            <td>52</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#</td>
-                                            <td>Carlos</td>
-                                            <td>Vallarta</td>
-                                            <td>carlos@example.com</td>
-                                            <td>34</td>
-                                        </tr>
+                                        { student_HTMLTABLE }
                                     </tbody>
                                 </table>
                                 
