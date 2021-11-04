@@ -38,13 +38,14 @@ class EditStudent extends Component  {
     updateStudent = async (e) => {
         e.preventDefault();
 
+        document.getElementById('btn-update').disabled = true;
         document.getElementById('btn-update').innerText = "Updating...";
         const id_student = this.props.match.params.id;
         const resp = await axios.put(`http://127.0.0.1:8000/api/update-student/${id_student}`, this.state);
 
         if( resp.data.status === 200  ){
-            alert(resp.data.message);
             document.getElementById('btn-update').innerText = "Update Student";
+            document.getElementById('btn-update').disabled = false;
         }
         
     }
