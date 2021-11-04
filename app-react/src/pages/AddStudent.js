@@ -20,10 +20,11 @@ class AddStudent extends Component {
 
     saveStudent = async (e) => {
         e.preventDefault();
+        /* Cosumir api desde Api Rest laravel */
         const resp = await axios.post('http://127.0.0.1:8000/api/add-student', this.state);
         
         if( resp.data.status === 200 ){
-            // * Mostrar respuesta del servidor
+            /* Mostrar respuesta del servidor */
             console.log(resp.data.message);
             
             /* Vaciar campos */

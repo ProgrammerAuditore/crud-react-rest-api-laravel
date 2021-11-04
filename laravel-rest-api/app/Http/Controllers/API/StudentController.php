@@ -9,7 +9,7 @@ use App\Models\Student;
 
 class StudentController extends Controller
 {
-    //
+    // Función para guardar datos en la tabla de la base de datos
     public function store(Request $request){
         
         $student = new Student;

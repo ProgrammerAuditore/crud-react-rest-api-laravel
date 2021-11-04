@@ -13,6 +13,7 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
+        /* Crear la tabla en la base de datos*/
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');

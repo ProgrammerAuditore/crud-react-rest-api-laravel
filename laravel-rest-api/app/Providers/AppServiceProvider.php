@@ -24,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Establecer una tamaño predeterminado para los varchar 
+        // en la base de datos...
         return Schema::defaultStringLength(191);
     }
 }
