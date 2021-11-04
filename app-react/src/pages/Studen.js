@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 class Student extends Component {
 
     state = {
@@ -31,6 +31,12 @@ class Student extends Component {
             
             thidClickedFunda.closest("tr").remove();
             console.log(resp.data.message);
+            Swal.fire({
+                title: 'Success',
+                text: resp.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK!'
+            });
             
         }
     }

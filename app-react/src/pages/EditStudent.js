@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import {Link } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 class EditStudent extends Component  {
 
     state  = {
@@ -44,7 +44,14 @@ class EditStudent extends Component  {
         const resp = await axios.put(`http://127.0.0.1:8000/api/update-student/${id_student}`, this.state);
 
         if( resp.data.status === 200  ){
-            console.log(resp.data.message);
+            //console.log(resp.data.message);
+            Swal.fire({
+                title: 'Success',
+                text: resp.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK!'
+            });
+
             document.getElementById('btn-update').innerText = "Update Student";
             document.getElementById('btn-update').disabled = false;
         }

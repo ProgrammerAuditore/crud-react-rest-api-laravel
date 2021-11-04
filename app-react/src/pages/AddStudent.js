@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 class AddStudent extends Component {
 
@@ -24,8 +25,12 @@ class AddStudent extends Component {
         const resp = await axios.post('http://127.0.0.1:8000/api/add-student', this.state);
         
         if( resp.data.status === 200 ){
-            /* Mostrar respuesta del servidor */
-            console.log(resp.data.message);
+            Swal.fire({
+                title: 'Success',
+                text: resp.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK!'
+            });
             
             /* Vaciar campos */
             this.setState({
