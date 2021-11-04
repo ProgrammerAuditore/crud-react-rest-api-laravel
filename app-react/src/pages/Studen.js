@@ -13,7 +13,6 @@ class Student extends Component {
         const resp = await axios.get('http://127.0.0.1:8000/api/students');
         
         if( resp.data.status === 200 ){
-            console.log(resp.data.students);
             this.setState({
                 students: resp.data.students,
                 loading : false,

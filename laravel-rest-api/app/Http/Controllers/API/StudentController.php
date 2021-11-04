@@ -36,4 +36,28 @@ class StudentController extends Controller
             'message' => 'Student Added Successfully'
         ]);
     }
+
+    public function edit($id){
+        $student = Student::find($id);
+        if( $student != NULL ){
+            $response = ["status" => 200, "student" => $student];
+        }else {
+            $response = ["status" => 403, "student" => NULL];
+        }
+
+        return response()->json($response);
+    }
+
+    public function update(Request $request, $id){
+        $student = Student::find($id);
+        $student->name = $request['name'];
+        $student->lastname = $request['lastname'];
+        $student->email = $request['email'];
+        $student->age = $request['age'];
+        $student->update();
+
+        $response = ["status" => 200, "message" => "Updated Student Successly"];
+        return response()->json($response);
+    }
+
 }
