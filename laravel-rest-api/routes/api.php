@@ -25,6 +25,8 @@ Route::get('/edit-student/{id}', [StudentController::class, 'edit']);
 
 Route::put('update-student/{id}', [StudentController::class, 'update']);
 
+Route::delete('delete-student/{id}', [StudentController::class, 'destroy']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

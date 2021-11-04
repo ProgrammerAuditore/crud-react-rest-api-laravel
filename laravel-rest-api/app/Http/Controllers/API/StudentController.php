@@ -60,4 +60,12 @@ class StudentController extends Controller
         return response()->json($response);
     }
 
+    public function destroy($id){
+        $student = Student::find($id);
+        $student->delete();
+        
+        $response = ["status" => 200, "message" => "Student Delete Successly"];
+        return response()->json($response);
+    }
+
 }
