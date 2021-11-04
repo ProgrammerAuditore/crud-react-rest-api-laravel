@@ -37,20 +37,14 @@ class EditStudent extends Component  {
 
     updateStudent = async (e) => {
         e.preventDefault();
+
+        document.getElementById('btn-update').innerText = "Updating...";
         const id_student = this.props.match.params.id;
         const resp = await axios.put(`http://127.0.0.1:8000/api/update-student/${id_student}`, this.state);
 
         if( resp.data.status === 200  ){
             alert(resp.data.message);
-            window.location.href = "/";
-            /* Limpia los campos del formulario */
-            this.setState({
-                name : '',
-                lastname : '',
-                email : '',
-                age : ''
-            });
-
+            document.getElementById('btn-update').innerText = "Update Student";
         }
         
     }
@@ -109,7 +103,7 @@ class EditStudent extends Component  {
                                         </div>
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary">Update Student</button>
+                                    <button type="submit" id="btn-update" className="btn btn-primary">Update Student</button>
 
                                 </form>
                             </div>
