@@ -9,7 +9,8 @@ class AddStudent extends Component {
         name: '',
         lastname: '',
         email : '',
-        age : ''
+        age : '',
+        error_list : [],
     }
 
     handleInput = (e) => {
@@ -30,14 +31,22 @@ class AddStudent extends Component {
                 text: resp.data.message,
                 icon: 'success',
                 confirmButtonText: 'OK!'
-            });
-            
-            /* Vaciar campos */
+            }).then( (result) => {
+
+                /* Vaciar campos */
+                this.setState({
+                    name: '',
+                    lastname: '',
+                    email : '',
+                    age : ''
+                });
+
+                this.props.history.push("/");
+                
+            });            
+        }else{
             this.setState({
-                name: '',
-                lastname: '',
-                email : '',
-                age : ''
+                error_list : resp.data.validate_err,
             });
         }
 
@@ -59,10 +68,11 @@ class AddStudent extends Component {
                                     {/* Nombre */}
                                     <div className="form-group mb-3">
                                         <div className="mb-3">
-                                          <label htmlFor="name" className="form-label">Name</label>
+                                          <label htmlFor="name" className="form-label">Name</label> 
                                           <input type="text" name="name" id="name" onChange={this.handleInput} value={this.state.name} 
                                           className="form-control" placeholder="Input name" aria-describedby="iname" />
-                                          <small id="iname" className="text-muted">Only characters</small>
+                                          <small id="iname" className="text-muted">Only characters. </small>
+                                          <small id="iname-error" className="text-danger">{this.state.error_list.name}</small> <br />
                                         </div>
                                     </div>
 
@@ -72,7 +82,8 @@ class AddStudent extends Component {
                                           <label htmlFor="lastname" className="form-label">Last name</label>
                                           <input type="text" name="lastname" id="lastname" onChange={this.handleInput} value={this.state.lastname}
                                           className="form-control" placeholder="Last name" aria-describedby="ilastname" />
-                                          <small id="ilastname" className="text-muted">Only characters</small>
+                                          <small id="ilastname" className="text-muted">Only characters. </small>
+                                          <small id="ilastname-error" className="text-danger">{this.state.error_list.lastname}</small> <br />
                                         </div>
                                     </div>
 
@@ -82,7 +93,8 @@ class AddStudent extends Component {
                                           <label htmlFor="email" className="form-label">Email</label>
                                           <input type="text" name="email" id="email" onChange={this.handleInput} value={this.state.email}
                                           className="form-control" placeholder="email" aria-describedby="iEmail" />
-                                          <small id="iEmail" className="text-muted">Only characters</small>
+                                          <small id="iEmail" className="text-muted">Only characters. </small>
+                                          <small id="iemail-error" className="text-danger">{this.state.error_list.email}</small> <br />
                                         </div>
                                     </div>
 
@@ -93,7 +105,8 @@ class AddStudent extends Component {
                                           <label htmlFor="age" className="form-label">Age</label>
                                           <input type="number" name="age" id="age" onChange={this.handleInput} value={this.state.age}
                                           className="form-control" placeholder="Age" aria-describedby="iage" />
-                                          <small id="iage" className="text-muted">Only characters</small>
+                                          <small id="iage" className="text-muted">Only characters. </small>
+                                          <small id="iage-error" className="text-danger">{this.state.error_list.age}</small> <br />
                                         </div>
                                     </div>
 

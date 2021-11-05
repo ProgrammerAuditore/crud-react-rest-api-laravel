@@ -21,16 +21,27 @@ class EditStudent extends Component  {
         const id_student = this.props.match.params.id;
         const resp = await axios.get(`http://127.0.0.1:8000/api/edit-student/${id_student}`);
 
-        if( resp.data.student !== null && resp.data.status === 200 ){
+        if( resp.data.status === 200 ){
+            
             this.setState({
                 name : resp.data.student.name,
                 lastname : resp.data.student.lastname,
                 email : resp.data.student.email,
                 age : resp.data.student.age
             });
-        }else{
-            alert("Student no found.");
-            window.location.href = "/";
+
+        }else if( resp.data.status === 404 ){
+            
+            Swal.fire({
+                title: 'Error',
+                text: resp.data.message,
+                icon: 'error',
+                confirmButtonText: 'OK!'
+            }).then( (result) =>{
+                this.props.history.push("/");
+            });
+
+            
         }
 
     }
