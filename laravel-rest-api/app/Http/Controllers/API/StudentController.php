@@ -25,7 +25,7 @@ class StudentController extends Controller
     // Función para guardar datos en la tabla de la base de datos
     public function store(Request $request){
         
-        $validator = Validator::make( $request->all(),[
+        $validator = Validator::make( $request->all() , [
             'name' => 'required|max:191',
             'lastname' => 'required|max:191',
             'email' => 'required|email|max:191',
@@ -68,14 +68,32 @@ class StudentController extends Controller
     }
 
     public function update(Request $request, $id){
-        $student = Student::find($id);
-        $student->name = $request['name'];
-        $student->lastname = $request['lastname'];
-        $student->email = $request['email'];
-        $student->age = $request['age'];
-        $student->update();
 
-        $response = ["status" => 200, "message" => "Updated Student Successly"];
+        $validator = Validator::make( $request->all() , [
+            'name' => 'required|max:191',
+            'lastname' => 'required|max:191',
+            'email' => 'required|email|max:191',
+            'age' => 'required|numeric|between:18,100',
+        ]);
+
+        if( $validator->fails() ) {
+            $response = ["status" => 404, "message" => "Student not found.", "list_err" => $validator->getMessageBag()];
+
+        }else{
+
+            $student = Student::find($id);
+            if( $student ) {
+                $student->name = $request['name'];
+                $student->lastname = $request['lastname'];
+                $student->email = $request['email'];
+                $student->age = $request['age'];
+                $student->update();
+
+                $response = ["status" => 200, "message" => "Updated Student Successly"];
+            } 
+            
+        }
+
         return response()->json($response);
     }
 
