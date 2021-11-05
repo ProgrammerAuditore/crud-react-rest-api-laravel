@@ -30,7 +30,6 @@ class Student extends Component {
         if( resp.data.status === 200 ){
             
             thidClickedFunda.closest("tr").remove();
-            console.log(resp.data.message);
             Swal.fire({
                 title: 'Success',
                 text: resp.data.message,
